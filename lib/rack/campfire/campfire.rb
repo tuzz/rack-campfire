@@ -26,6 +26,6 @@ class Rack::Campfire
   end
 
   def env(message, room)
-    { :message => message, :room => room, :rooms => @room, :campfire => @campfire }
+    { :message => message, :room => room, :rooms => @rooms, :campfire => @campfire }
   end
 end
