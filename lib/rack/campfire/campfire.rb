@@ -18,6 +18,7 @@ class Rack::Campfire
   end
 
   def listen
+    Thread.abort_on_exception = true
     @rooms.each { |r| Thread.new { r.listen { |m| respond(m, r) } } }
   end
 
