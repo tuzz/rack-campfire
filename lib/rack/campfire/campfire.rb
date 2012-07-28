@@ -7,7 +7,7 @@ class Rack::Campfire
   end
 
   def call(env)
-    @app.call(env)
+    @app.call(env.merge(params))
   end
 
   private
@@ -21,6 +21,9 @@ class Rack::Campfire
 
   def respond(message, room)
     @app.call(env(message, room))
+  def params
+    { 'campfire' => @campfire, 'campfire.rooms' => @rooms }
+  end
   end
 
   def env(message, room)
