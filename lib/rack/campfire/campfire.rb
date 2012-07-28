@@ -1,6 +1,4 @@
 class Rack::Campfire
-  include Coercion
-
   def initialize(app, subdomain, api_key, rooms = nil)
     @app = app
     @campfire = campfire(subdomain, api_key)
@@ -27,5 +25,14 @@ class Rack::Campfire
 
   def env(message, room)
     { :message => message, :room => room, :rooms => @rooms, :campfire => @campfire }
+  def coerce(rooms)
+    case rooms
+    when nil
+      [@campfire.rooms.first]
+    when String
+      [@campfire.find_room_by_name(rooms)]
+    when Array
+      rooms.map { |r| @campfire.find_room_by_name(r) }
+    end
   end
 end
