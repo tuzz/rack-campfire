@@ -148,7 +148,7 @@ end
 Posting a message to the campfire room should prompt the bot to reply
 'Hello' and 'world' on separate lines.
 
-The only other things available is 'campfire' itself. This is an
+The only other things available is 'tinder'. This is an
 instance of [Tinder](https://github.com/collectiveidea/tinder/). I'd
 recommend looking at their documentation if you'd like to learn how your
 bot could paste snippets of code, upload files, etc.

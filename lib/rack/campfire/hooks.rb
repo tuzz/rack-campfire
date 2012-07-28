@@ -1,6 +1,6 @@
 class Rack::Campfire
   module Hooks
-    def campfire
+    def tinder
       env['campfire']
     end
 
