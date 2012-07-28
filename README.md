@@ -47,9 +47,8 @@ run Sinatra::Application
 ```
 
 ```subdomain``` and ```api_key``` are strings that correspond to your
-bot. ```rooms``` is a list of rooms you'd like your bot to join. It can
-be a single string if you like, or nil if you'd like it to join the
-first room.
+bot. ```rooms``` is a list of rooms you'd like your bot to join or a
+single room. It can be omitted if you only have one room.
 
 After running ```rackup```, you should see 'Hello, campfire!' in one of the
 rooms your campfire bot has joined, after posting any message in that
