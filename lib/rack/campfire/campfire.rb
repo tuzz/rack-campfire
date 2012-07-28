@@ -39,6 +39,7 @@ class Rack::Campfire
   end
 
   def originated_from_me?(message)
+    return unless message.user
     @me ||= @campfire.me.email_address
     message.user.email_address == @me
   end
