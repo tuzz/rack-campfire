@@ -20,14 +20,25 @@ class Rack::Campfire
   end
 
   def respond(message, room)
-    @app.call(env(message, room))
+    return if originated_from_me?(message)
+    env = mock_environment.merge('campfire.message' => message)
+    response = call(env).last.join("\n")
+    room.speak response unless response.empty?
+  end
+
   def params
     { 'campfire' => @campfire, 'campfire.rooms' => @rooms }
   end
+
+  def mock_environment
+    Rack::MockRequest.env_for('/campfire')
   end
 
-  def env(message, room)
-    { :message => message, :room => room, :rooms => @rooms, :campfire => @campfire }
+  def originated_from_me?(message)
+    @me ||= @campfire.me.email_address
+    message.user.email_address == @me
+  end
+
   def coerce(rooms)
     case rooms
     when nil
