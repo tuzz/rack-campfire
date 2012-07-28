@@ -1,5 +1,5 @@
 class Rack::Campfire
-  include Logging
+  include Logging, Coercion
 
   def initialize(app, subdomain, api_key, rooms = nil)
     @app = app
@@ -40,16 +40,5 @@ class Rack::Campfire
   def originated_from_me?(message)
     @me ||= @campfire.me.email_address
     message.user.email_address == @me
-  end
-
-  def coerce(rooms)
-    case rooms
-    when nil
-      [@campfire.rooms.first]
-    when String
-      [@campfire.find_room_by_name(rooms)]
-    when Array
-      rooms.map { |r| @campfire.find_room_by_name(r) }
-    end
   end
 end
