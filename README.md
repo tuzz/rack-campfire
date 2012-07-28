@@ -171,11 +171,12 @@ Add rack-campfire to the middleware stack.
 config.middleware.use Rack::Campfire, subdomain, api_key, rooms
 ```
 
-Add a route for campfire.
+Add a route for campfire. You'll probably want to set it to render
+textual versions of views by default.
 
 ```ruby
 # config/routes.rb
-match '/campfire' => 'campfire#campfire'
+match '/campfire' => 'campfire#campfire', :defaults => { :format => :text }
 ```
 
 And finally, create your controller. You can include the hooks here too
