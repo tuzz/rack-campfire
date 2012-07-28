@@ -1,4 +1,6 @@
 class Rack::Campfire
+  include Logging
+
   def initialize(app, subdomain, api_key, rooms = nil)
     @app = app
     @campfire = campfire(subdomain, api_key)
@@ -20,6 +22,7 @@ class Rack::Campfire
   end
 
   def respond(message, room)
+    log(message)
     return if originated_from_me?(message)
     env = mock_environment.merge('campfire.message' => message)
     response = call(env).last.join("\n")
