@@ -152,3 +152,70 @@ The only other things available is 'tinder'. This is an
 instance of [Tinder](https://github.com/collectiveidea/tinder/). I'd
 recommend looking at their documentation if you'd like to learn how your
 bot could paste snippets of code, upload files, etc.
+
+# Rails
+
+Just like Sinatra- Rails sits on top of Rack. This means that we can use
+rack-campfire inside our Rails applications. Here's how.
+
+Add rack-campfire to your Gemfile.
+
+```ruby
+# Gemfile
+gem 'rack-campfire'
+```
+
+Add rack-campfire to the middleware stack.
+
+```ruby
+# config/application.rb
+config.middleware.use Rack::Campfire, subdomain, api_key, rooms
+```
+
+Add a route for campfire.
+
+```ruby
+# config/routes.rb
+match '/campfire' => 'campfire#campfire'
+```
+
+And finally, create your controller. You can include the hooks here too
+if you like.
+
+```ruby
+class CampfireController < ApplicationController
+  include Rack::Campfire::Hooks
+
+  def campfire
+    render :text => "Responding to #{message.body}"
+  end
+end
+```
+
+Remember that you can make campfire calls elsewhere too. You just won't
+have a handle on message or room.
+
+```ruby
+class UsersController < ApplicationController
+  include Rack::Campfire::Hooks
+
+  def create
+    # ...
+    rooms.first.speak "#{params[:user][:name] just signed up!"
+  end
+end
+```
+
+If you're doing this frequently, I'd recommend including the hooks in
+ApplicationController.
+
+Note: You may run into problems if Rack::Campfire is not in the final
+position on the middleware stack. You can test this by running rake
+middleware. You can use ```config.middleware.insert_after``` in these
+cases.
+
+# Contribution
+
+Feel free to contribute. No commit is too small.
+
+[@cpatuzzo](https://twitter.com/cpatuzzo)
