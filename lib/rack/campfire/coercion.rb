@@ -1,6 +1,6 @@
 class Rack::Campfire
   module Coercion
-    def coerce(rooms)
+    def coerce_rooms(rooms)
       case rooms
       when :all
         @campfire.rooms
@@ -19,6 +19,14 @@ class Rack::Campfire
             array += @campfire.find_room_by_name(room)
           end
         end
+      end
+    end
+
+    def coerce_body(body)
+      if body.respond_to? :body
+        body.body
+      else
+        [body].join("\n")
       end
     end
   end

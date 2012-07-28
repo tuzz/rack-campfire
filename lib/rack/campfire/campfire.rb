@@ -4,7 +4,7 @@ class Rack::Campfire
   def initialize(app, subdomain, api_key, rooms = nil)
     @app = app
     @campfire = campfire(subdomain, api_key)
-    @rooms = coerce(rooms)
+    @rooms = coerce_rooms(rooms)
     listen
   end
 
@@ -26,7 +26,7 @@ class Rack::Campfire
     log(message)
     return if originated_from_me?(message)
     env = mock_environment.merge('campfire.message' => message)
-    response = call(env).last.join("\n")
+    response = coerce_body(@app.call(env).last)
     room.speak response unless response.empty?
   end
 
