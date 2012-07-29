@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'rack-campfire'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.summary     = 'Rack Campfire'
   s.description = 'Rack middleware to facilitate Campfire control via a Rack application'
   s.author      = 'Christopher Patuzzo'
