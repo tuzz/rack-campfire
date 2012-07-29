@@ -18,16 +18,17 @@ class Rack::Campfire
   end
 
   def listen
-    Thread.abort_on_exception = true
     @rooms.each { |r| Thread.new { r.listen { |m| respond(m, r) } } }
   end
 
   def respond(message, room)
-    log(message)
+    log_message(message)
     return if originated_from_me?(message)
     env = mock_environment.merge('campfire.message' => message)
     response = coerce_body(@app.call(env).last)
     room.speak response unless response.empty?
+  rescue => e
+    log_error(e)
   end
 
   def params
