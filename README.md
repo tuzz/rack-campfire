@@ -213,9 +213,3 @@ Note: You may run into problems if Rack::Campfire is not in the final
 position on the middleware stack. You can test this by running rake
 middleware. You can use ```config.middleware.insert_after``` in these
 cases.
-
-# Contribution
-
-Feel free to contribute. No commit is too small.
-
-[@cpatuzzo](https://twitter.com/cpatuzzo)
